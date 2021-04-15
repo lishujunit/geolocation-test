@@ -1,8 +1,11 @@
 <template>
   <div class="main">
     <button @click="handleGeoloaction">获取位置</button>
-    <p>{{msg}}</p>
+    <h1>经度: {{Longitude}}</h1>
+    <h1>纬度: {{Latitude}}</h1>
   </div>
+
+  <p>{{msg}}</p>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
@@ -16,21 +19,28 @@ export default {
   },
   data() {
     return {
-      msg: 'hello'
+      Longitude: '',
+      Latitude: '',
+      msg: ''
     }
   },
   methods: {
     handleGeoloaction() {
       if(navigator.geolocation.getCurrentPosition) {
         console.log('handleGeoloaction')
+        this.msg = 'init'
         navigator.geolocation.getCurrentPosition((pos)=>{
+          this.msg = 'done'
           var crd = pos.coords;
 
           console.log('Your current position is:');
           console.log('Latitude : ' + crd.latitude);
           console.log('Longitude: ' + crd.longitude);
           console.log('More or less ' + crd.accuracy + ' meters.');
+          this.Longitude = crd.longitude;
+          this.Latitude = crd.latitude;
         }, (err)=>{
+          this.msg = 'err'
           console.warn('ERROR(' + err.code + '): ' + err.message);
         })
       } else {
