@@ -22,7 +22,17 @@ export default {
   methods: {
     handleGeoloaction() {
       if(navigator.geolocation.getCurrentPosition) {
-        navigator.geolocation.getCurrentPosition(this.getPositionSucess, this.getPositionError)
+        console.log('handleGeoloaction')
+        navigator.geolocation.getCurrentPosition((pos)=>{
+          var crd = pos.coords;
+
+          console.log('Your current position is:');
+          console.log('Latitude : ' + crd.latitude);
+          console.log('Longitude: ' + crd.longitude);
+          console.log('More or less ' + crd.accuracy + ' meters.');
+        }, (err)=>{
+          console.warn('ERROR(' + err.code + '): ' + err.message);
+        })
       } else {
         throw new Error('您的浏览器不支持获取用户位置')
       }
