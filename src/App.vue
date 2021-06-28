@@ -30,9 +30,9 @@ export default {
         //用户允许
         var instance = new Notification("title", {
           body: "Body text!",
-          image: 'http://img18.house365.com/newcms/2017/03/16/148964317858ca26aacf7b5.jpg', // 通知图标 
+          //image: 'http://img18.house365.com/newcms/2017/03/16/148964317858ca26aacf7b5.jpg', // 通知图标 
           requireInteraction: true, // 不自动关闭通知
-          icon: 'http://img18.house365.com/newcms/2017/03/16/148964317858ca26aacf7b5.jpg', // 通知图标 
+          //icon: 'http://img18.house365.com/newcms/2017/03/16/148964317858ca26aacf7b5.jpg', // 通知图标 
           vibrate: true
         });
         instance.onclick = function() {
