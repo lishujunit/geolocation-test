@@ -13,52 +13,66 @@
 //import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     //HelloWorld
   },
   data() {
     return {
-      Longitude: '',
-      Latitude: '',
-      msg: ''
-    }
+      Longitude: "",
+      Latitude: "",
+      msg: ""
+    };
+  },
+  mounted() {
+    Notification.requestPermission().then(permission => {
+      console.log("User responded to permission request:", permission);
+      let n = new Notification("Title text!", {
+        body: "Body text!",
+        image: "path/to/image.png",
+        vibrate: true
+      });
+      setTimeout(() => n.close(), 5000);
+    });
   },
   methods: {
     handleGeoloaction() {
-      if(navigator.geolocation.getCurrentPosition) {
-        console.log('handleGeoloaction')
-        this.msg = 'init'
-        navigator.geolocation.getCurrentPosition((pos)=>{
-          this.msg = 'done'
-          var crd = pos.coords;
+      if (navigator.geolocation.getCurrentPosition) {
+        console.log("handleGeoloaction");
+        this.msg = "init";
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            this.msg = "done";
+            var crd = pos.coords;
 
-          console.log('Your current position is:');
-          console.log('Latitude : ' + crd.latitude);
-          console.log('Longitude: ' + crd.longitude);
-          console.log('More or less ' + crd.accuracy + ' meters.');
-          this.Longitude = crd.longitude;
-          this.Latitude = crd.latitude;
-        }, (err)=>{
-          this.msg = 'err'
-          console.warn('ERROR(' + err.code + '): ' + err.message);
-        })
+            console.log("Your current position is:");
+            console.log("Latitude : " + crd.latitude);
+            console.log("Longitude: " + crd.longitude);
+            console.log("More or less " + crd.accuracy + " meters.");
+            this.Longitude = crd.longitude;
+            this.Latitude = crd.latitude;
+          },
+          err => {
+            this.msg = "err";
+            console.warn("ERROR(" + err.code + "): " + err.message);
+          }
+        );
       } else {
-        throw new Error('您的浏览器不支持获取用户位置')
+        throw new Error("您的浏览器不支持获取用户位置");
       }
     },
     getPositionSucess(position) {
-      console.log('sucess', position)
+      console.log("sucess", position);
       console.log(position.timestamp); // 1525364883361
-      console.log(position.coords);     // Coordinates {...}
+      console.log(position.coords); // Coordinates {...}
     },
     getPositionError(e) {
-      console.log('error', e)
-      console.log(e.code)
-      console.log(e.e.message)
+      console.log("error", e);
+      console.log(e.code);
+      console.log(e.e.message);
     }
   }
-}
+};
 </script>
 
 <style>
