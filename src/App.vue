@@ -25,15 +25,43 @@ export default {
     };
   },
   mounted() {
-    Notification.requestPermission().then(permission => {
-      console.log("User responded to permission request:", permission);
-      let n = new Notification("Title text!", {
-        body: "Body text!",
-        image: "path/to/image.png",
-        vibrate: true
-      });
-      setTimeout(() => n.close(), 5000);
+    Notification.requestPermission(function(status) {
+      if (status === "granted") {
+        //用户允许
+        var instance = new Notification("title", {
+          body: "Body text!",
+          //image: "path/to/image.png",
+          vibrate: true
+        });
+        instance.onclick = function() {
+          console.log("onclick");
+          // 关闭通知
+          instance.close();
+        };
+        instance.onerror = function() {
+          console.log("onerror");
+        };
+        instance.onshow = function() {
+          console.log("onshow");
+        };
+        instance.onclose = function() {
+          console.log("onclose");
+        };
+      } else {
+        //用户禁止
+        console.log("禁止");
+        return false;
+      }
     });
+    // Notification.requestPermission().then(permission => {
+    //   console.log("User responded to permission request:", permission);
+    //   let n = new Notification("Title text!", {
+    //     body: "Body text!",
+    //     image: "path/to/image.png",
+    //     vibrate: true
+    //   });
+    //   setTimeout(() => n.close(), 5000);
+    // });
   },
   methods: {
     handleGeoloaction() {
